@@ -4,9 +4,9 @@ LABEL maintainer "m.v.d.schee@ewake.nl"
 
 ENV VIRTUAL_PROTO http
 
-# Install core packages for nginx and php7.0.
+# Install core packages for nginx and php7.2.5.
 RUN apt-get update -q
-RUN apt-get install -y nginx php7.0 php7.0-fpm
+RUN apt-get install -y nginx php7.2.5 php7.2.5-fpm
 RUN apt-get clean -q && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Setup nginx config
@@ -29,7 +29,7 @@ COPY www.conf /etc/php/7.0/fpm/pool.d/www.conf
 
 # Setup Php service
 RUN mkdir -p /run/php/
-RUN touch /run/php/php7.0-fpm.sock
+RUN touch /run/php/php7.2.5-fpm.sock
 RUN mkdir -p /etc/service/php-fpm
 RUN touch /etc/service/php-fpm/run
 RUN chmod +x /etc/service/php-fpm/run
