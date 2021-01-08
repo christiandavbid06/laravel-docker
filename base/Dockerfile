@@ -8,8 +8,11 @@ CMD ["/sbin/my_init"]
 RUN groupadd -r devops && useradd -r -g devops -d /var/www devops
 
 # Instalacion de core packages
-RUN apt update -q
+RUN apt-get update -q
 RUN apt --fix-broken install
-RUN apt upgrade -y -q
+RUN apt-get update –fix-missing
+RUN dpkg –configure -a
+RUN apt-get install -f
+RUN apt-get upgrade -y -q
 RUN apt-get install -y zip unzip git-core nano
 RUN apt-get clean -q && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
