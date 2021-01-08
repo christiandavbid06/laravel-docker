@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Extra step just to be sure
-echo "Changing owner of website"
-chown container:container /var/www/app -R
+echo "Cambiando propietario del website"
+chown devops:devops /var/www/app -R
 
 # Split VIRTUAL_HOST in to multiple items if it is set up this way
 IFS=',' read -r -a array <<< ${VIRTUAL_HOST}

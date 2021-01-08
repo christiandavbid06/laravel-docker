@@ -1,6 +1,6 @@
-FROM maxvanderschee/base
+FROM christiandavbid/base
 
-LABEL maintainer "m.v.d.schee@ewake.nl"
+LABEL maintainer "christiandavbid@gmail.com"
 
 ENV VIRTUAL_PROTO http
 
@@ -24,8 +24,8 @@ RUN sed -i 's|# gzip_types|  gzip_types|' /etc/nginx/nginx.conf
 
 # Setup security to nginx
 RUN echo 'fastcgi_param  HTTP_PROXY         "";' >> /etc/nginx/fastcgi.conf
-RUN rm /etc/php/7.0/fpm/pool.d/www.conf
-COPY www.conf /etc/php/7.0/fpm/pool.d/www.conf
+RUN rm /etc/php/7.2.5/fpm/pool.d/www.conf
+COPY www.conf /etc/php/7.2.5/fpm/pool.d/www.conf
 
 # Setup Php service
 RUN mkdir -p /run/php/
@@ -34,9 +34,9 @@ RUN mkdir -p /etc/service/php-fpm
 RUN touch /etc/service/php-fpm/run
 RUN chmod +x /etc/service/php-fpm/run
 RUN echo '#!/bin/bash \n\
-    exec /usr/sbin/php-fpm7.0 -F' >> /etc/service/php-fpm/run
-RUN echo "opcache.enable=1" >> /etc/php/7.0/fpm/php.ini
-RUN echo "cgi.fix_pathinfo=1" >> /etc/php/7.0/fpm/php.ini
+    exec /usr/sbin/php-fpm7.2.5 -F' >> /etc/service/php-fpm/run
+RUN echo "opcache.enable=1" >> /etc/php/7.2.5/fpm/php.ini
+RUN echo "cgi.fix_pathinfo=1" >> /etc/php/7.2.5/fpm/php.ini
 
 # Setup Nginx service
 RUN mkdir -p /etc/service/nginx
