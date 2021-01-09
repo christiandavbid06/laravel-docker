@@ -1,6 +1,6 @@
-FROM maxvanderschee/nginx-php
+FROM christiandavbid/nginx-php
 
-LABEL maintainer "m.v.d.schee@ewake.nl"
+LABEL maintainer "christiandavbid@gmail.com"
 
 # Install core packages for laravel.
 RUN apt-get update -q
