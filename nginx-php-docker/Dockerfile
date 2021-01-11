@@ -5,6 +5,7 @@ LABEL maintainer "christiandavbid@gmail.com"
 ENV VIRTUAL_PROTO http
 
 # Install core packages for nginx and php7.3.
+RUN add-apt-repository ppa:ondrej/php
 RUN apt-get update -q
 RUN apt-get install -y nginx php7.3 php7.3-fpm
 RUN apt-get clean -q && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
