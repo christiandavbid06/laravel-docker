@@ -29,7 +29,7 @@ services:
       MYSQL_USER: devops
       MYSQL_PASSWORD: sasasa
     volumes:
-      - 'bdata:/var/lib/mysql'docke
+      - 'bdata:/var/lib/mysql'
       #- './mysql/my.cnf:/etc/mysql/my.cnf'
 
   nginx-proxy:
