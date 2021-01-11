@@ -16,17 +16,25 @@ services:
       - "/var/www/laravel:/var/www/app"
     volumes_from:
       - "nginx-proxy"
+    networks:
+      - anikamagroup
 
   database:
     image: mysql:5.7.22
     container_name: database
+    restart: always
+    ports:
+        - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: weiweiwei
       MYSQL_DATABASE: database
       MYSQL_USER: devops
       MYSQL_PASSWORD: sasasa
     volumes:
-      - "/var/www/mysql:/var/lib/mysql"
+      - 'bdata:/var/lib/mysql'
+      - './mysql/my.cnf:/etc/mysql/my.cnf'
+    networks:
+      - anikamagroup
 
   nginx-proxy:
     image: jwilder/nginx-proxy
@@ -48,3 +56,10 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     volumes_from:
       - "nginx-proxy"
+      
+networks: 
+  anikamagroup:
+    driver: bridge
+
+volumes: 
+  bdata:
