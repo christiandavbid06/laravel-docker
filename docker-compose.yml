@@ -30,7 +30,7 @@ services:
       MYSQL_PASSWORD: sasasa
     volumes:
       - 'bdata:/var/lib/mysql'docke
-      - './mysql/my.cnf:/etc/mysql/my.cnf'
+      #- './mysql/my.cnf:/etc/mysql/my.cnf'
 
   nginx-proxy:
     image: jwilder/nginx-proxy
