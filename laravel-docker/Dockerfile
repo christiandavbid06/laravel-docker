@@ -3,6 +3,8 @@ FROM christiandavbid/nginx-php
 LABEL maintainer "christiandavbid@gmail.com"
 
 # Install core packages for laravel.
+RUN apt-get install software-properties-common
+RUN add-apt-repository ppa:ondrej/php
 RUN apt-get update -q
 RUN apt-get install -y php7.2.5-cli php7.2.5-mcrypt php7.2.5-mbstring php7.2.5-xml php7.2.5-curl php7.2.5-mysql
 RUN apt-get clean -q && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
