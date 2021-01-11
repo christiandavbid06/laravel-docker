@@ -1,29 +1,29 @@
 version: '2'
 
 services:
-  laravel:
-    image: christiandavbid/laravel:latest
-    container_name: laravel
-    environment:
-      VIRTUAL_HOST: sprinterweb.anikamagroup.com, www.sprinterweb.anikamagroup.com
-      VIRTUAL_PROTO: https
-      VIRTUAL_PORT: 443
-      LETSENCRYPT_HOST: sprinterweb.anikamagroup.com, www.sprinterweb.anikamagroup.com
-      LETSENCRYPT_EMAIL: cvasquez@anikamagroup.com
-    expose:
-      - "80"
-    depends_on:
-      - database
-    volumes:
-      - "/var/www/sprinterweb:/var/www/app"
-    volumes_from:
-      - "nginx-proxy"
-    depends_on: 
-        - database
-    environment: 
-        - LANG=es_PE.UTF-5
-        - LC_ALL=es_PE.UTF-5
-        - LANGUAGE=es_PE:es
+  #laravel:
+  #  image: christiandavbid/laravel:latest
+  #  container_name: laravel
+  #  environment:
+  #    VIRTUAL_HOST: sprinterweb.anikamagroup.com, www.sprinterweb.anikamagroup.com
+  #    VIRTUAL_PROTO: https
+  #    VIRTUAL_PORT: 443
+  #    LETSENCRYPT_HOST: sprinterweb.anikamagroup.com, www.sprinterweb.anikamagroup.com
+  #    LETSENCRYPT_EMAIL: cvasquez@anikamagroup.com
+  #  expose:
+  #    - "80"
+  #  depends_on:
+  #    - database
+  #  volumes:
+  #    - "/var/www/sprinterweb:/var/www/app"
+  #  volumes_from:
+  #    - "nginx-proxy"
+  #  depends_on: 
+  #    - database
+  #  environment: 
+  #    - LANG=es_PE.UTF-5
+  #    - LC_ALL=es_PE.UTF-5
+  #    - LANGUAGE=es_PE:es
 
   init_laravel:
     image: christiandavbid/laravel:latest
@@ -41,11 +41,11 @@ services:
     volumes_from:
       - "nginx-proxy"
     depends_on: 
-        - database
+      - database
     environment: 
-        - LANG=es_PE.UTF-5
-        - LC_ALL=es_PE.UTF-5
-        - LANGUAGE=es_PE:es
+      - LANG=es_PE.UTF-5
+      - LC_ALL=es_PE.UTF-5
+      - LANGUAGE=es_PE:es
 
   database:
     image: mysql:5.7.22
