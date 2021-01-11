@@ -1,49 +1,43 @@
-version: '2'
+version: '3'
 
 services:
-  laravel:
+  sprinterweb:
     image: christiandavbid/laravel:latest
-    container_name: laravel
+    container_name: sprinterweb
+    restart: always
     environment:
-      VIRTUAL_HOST: sprinterweb.anikamagroup.com
-      VIRTUAL_PROTO: https
-      VIRTUAL_PORT: 443
-      LETSENCRYPT_HOST: sprinterweb.anikamagroup.com
-      LETSENCRYPT_EMAIL: cvasquez@anikamagroup.com
+      - VIRTUAL_HOST=sprinterweb.anikamagroup.com,www.sprinterweb.anikamagroup.com
+      - LETSENCRYPT_HOST=sprinterweb.anikamagroup.com,www.sprinterweb.anikamagroup.com
+      - LETSENCRYPT_EMAIL=cvasquez@anikamagroup.com
     expose:
       - "80"
     depends_on:
       - database
+      - nginx-proxy
+      - ssl
     volumes:
       - "/var/www/sprinterweb:/var/www/app"
-    volumes_from:
-      - "nginx-proxy"
-    depends_on: 
-      - database
-    #environment: 
-    # - LANG=es_PE.UTF-5
-    # - LC_ALL=es_PE.UTF-5
-    # - LANGUAGE=es_PE:es
+    environment: 
+      - LANG=es_PE.UTF-5
+      - LC_ALL=es_PE.UTF-5
+      - LANGUAGE=es_PE:es
 
   init_laravel:
     image: christiandavbid/laravel:latest
     container_name: init_laravel
+    restart: always
     environment:
-      - VIRTUAL_HOST=test.anikamagroup.com
-      - VIRTUAL_PROTO=https
-      - VIRTUAL_PORT=443
-      - LETSENCRYPT_HOST=test.anikamagroup.com
+      - VIRTUAL_HOST=test.anikamagroup.com,www.test.anikamagroup.com
+      - LETSENCRYPT_HOST=test.anikamagroup.com,www.test.anikamagroup.com
       - LETSENCRYPT_EMAIL=cvasquez@anikamagroup.com
     expose:
       - '80'
-    depends_on:
-      - database
-    volumes:
-      - "/var/www/laravel-app:/var/www/app"
-    volumes_from:
-      - "nginx-proxy"
     depends_on: 
       - database
+      - nginx-proxy
+      - ssl
+    volumes:
+      - "/var/www/laravel-app:/var/www/app"
     environment: 
      - LANG=es_PE.UTF-5
      - LC_ALL=es_PE.UTF-5
@@ -76,14 +70,17 @@ services:
       - "/usr/share/nginx/html"
       - "/var/run/docker.sock:/tmp/docker.sock:ro"
       - "/etc/nginx/certs"
+    labels:
+      - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
 
   letsencrypt-nginx-proxy-companion:
     image: jrcs/letsencrypt-nginx-proxy-companion
     container_name: ssl
+    restart: always
+    environment:
+      - NGINX_PROXY_CONTAINER=nginx-proxy
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-    volumes_from:
-      - "nginx-proxy"
 
 volumes: 
   bdata:
