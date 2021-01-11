@@ -5,10 +5,10 @@ services:
     image: christiandavbid/laravel:latest
     container_name: laravel
     environment:
-      VIRTUAL_HOST: sprinterweb.anikamagroup.com, www.sprinterweb.anikamagroup.com
+      VIRTUAL_HOST: sprinterweb.anikamagroup.com
       VIRTUAL_PROTO: https
       VIRTUAL_PORT: 443
-      LETSENCRYPT_HOST: sprinterweb.anikamagroup.com, www.sprinterweb.anikamagroup.com
+      LETSENCRYPT_HOST: sprinterweb.anikamagroup.com
       LETSENCRYPT_EMAIL: cvasquez@anikamagroup.com
     expose:
       - "80"
@@ -21,19 +21,19 @@ services:
     depends_on: 
       - database
     #environment: 
-    #  - LANG=es_PE.UTF-5
-    #  - LC_ALL=es_PE.UTF-5
-    #  - LANGUAGE=es_PE:es
+    # - LANG=es_PE.UTF-5
+    # - LC_ALL=es_PE.UTF-5
+    # - LANGUAGE=es_PE:es
 
   init_laravel:
     image: christiandavbid/laravel:latest
     container_name: init_laravel
     environment:
-      VIRTUAL_HOST: test.anikamagroup.com, www.test.anikamagroup.com
-      VIRTUAL_PROTO: https
-      VIRTUAL_PORT: 443
-      LETSENCRYPT_HOST: test.anikamagroup.com, www.test.anikamagroup.com
-      LETSENCRYPT_EMAIL: cvasquez@anikamagroup.com
+      - VIRTUAL_HOST=test.anikamagroup.com
+      - VIRTUAL_PROTO=https
+      - VIRTUAL_PORT=443
+      - LETSENCRYPT_HOST=test.anikamagroup.com
+      - LETSENCRYPT_EMAIL=cvasquez@anikamagroup.com
     expose:
       - '80'
     depends_on:
@@ -44,10 +44,10 @@ services:
       - "nginx-proxy"
     depends_on: 
       - database
-    #environment: 
-    #  - LANG=es_PE.UTF-5
-    #  - LC_ALL=es_PE.UTF-5
-    #  - LANGUAGE=es_PE:es
+    environment: 
+     - LANG=es_PE.UTF-5
+     - LC_ALL=es_PE.UTF-5
+     - LANGUAGE=es_PE:es
 
   database:
     image: mysql:5.7.22
@@ -62,7 +62,7 @@ services:
       MYSQL_PASSWORD: sasasa
     volumes:
       - 'bdata:/var/lib/mysql'
-      #- './mysql/my.cnf:/etc/mysql/my.cnf'
+     #- './mysql/my.cnf:/etc/mysql/my.cnf'
 
   nginx-proxy:
     image: jwilder/nginx-proxy
