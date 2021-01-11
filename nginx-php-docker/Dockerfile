@@ -4,11 +4,11 @@ LABEL maintainer "christiandavbid@gmail.com"
 
 ENV VIRTUAL_PROTO http
 
-# Install core packages for nginx and php7.2.5.
+# Install core packages for nginx and php7.3.
 RUN apt-get install software-properties-common
 RUN add-apt-repository ppa:ondrej/php
 RUN apt-get update -q
-RUN apt-get install -y nginx php7.2.5 php7.2.5-fpm
+RUN apt-get install -y nginx php7.3 php7.3-fpm
 RUN apt-get clean -q && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Setup nginx config
@@ -26,19 +26,19 @@ RUN sed -i 's|# gzip_types|  gzip_types|' /etc/nginx/nginx.conf
 
 # Setup security to nginx
 RUN echo 'fastcgi_param  HTTP_PROXY         "";' >> /etc/nginx/fastcgi.conf
-RUN rm /etc/php/7.2.5/fpm/pool.d/www.conf
-COPY www.conf /etc/php/7.2.5/fpm/pool.d/www.conf
+RUN rm /etc/php/7.3/fpm/pool.d/www.conf
+COPY www.conf /etc/php/7.3/fpm/pool.d/www.conf
 
 # Setup Php service
 RUN mkdir -p /run/php/
-RUN touch /run/php/php7.2.5-fpm.sock
+RUN touch /run/php/php7.3-fpm.sock
 RUN mkdir -p /etc/service/php-fpm
 RUN touch /etc/service/php-fpm/run
 RUN chmod +x /etc/service/php-fpm/run
 RUN echo '#!/bin/bash \n\
-    exec /usr/sbin/php-fpm7.2.5 -F' >> /etc/service/php-fpm/run
-RUN echo "opcache.enable=1" >> /etc/php/7.2.5/fpm/php.ini
-RUN echo "cgi.fix_pathinfo=1" >> /etc/php/7.2.5/fpm/php.ini
+    exec /usr/sbin/php-fpm7.3 -F' >> /etc/service/php-fpm/run
+RUN echo "opcache.enable=1" >> /etc/php/7.3/fpm/php.ini
+RUN echo "cgi.fix_pathinfo=1" >> /etc/php/7.3/fpm/php.ini
 
 # Setup Nginx service
 RUN mkdir -p /etc/service/nginx
