@@ -2,14 +2,14 @@ version: '2'
 
 services:
   laravel:
-    image: maxvanderschee/laravel:latest
+    image: christiandavbid/laravel:latest
     container_name: laravel
     environment:
-      VIRTUAL_HOST: example.nl
+      VIRTUAL_HOST: test.anikamagroup.com, www.test.anikamagroup.com
       VIRTUAL_PROTO: https
       VIRTUAL_PORT: 443
-      LETSENCRYPT_HOST: example.nl
-      LETSENCRYPT_EMAIL: example@example.nl
+      LETSENCRYPT_HOST: test.anikamagroup.com, www.test.anikamagroup.com
+      LETSENCRYPT_EMAIL: cvasquez@anikamagroup.com
     depends_on:
       - database
     volumes:
@@ -21,10 +21,10 @@ services:
     image: mysql
     container_name: database
     environment:
-      MYSQL_ROOT_PASSWORD: ROOTPASSWORD
+      MYSQL_ROOT_PASSWORD: W0won5$5
       MYSQL_DATABASE: database
-      MYSQL_USER: user
-      MYSQL_PASSWORD: USERPASSWORD
+      MYSQL_USER: devops
+      MYSQL_PASSWORD: sasasa
     volumes:
       - "/var/www/mysql:/var/lib/mysql"
 
