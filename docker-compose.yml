@@ -5,6 +5,22 @@ services:
     image: christiandavbid/laravel:latest
     container_name: laravel
     environment:
+      VIRTUAL_HOST: sprinterweb.anikamagroup.com, www.sprinterweb.anikamagroup.com
+      VIRTUAL_PROTO: https
+      VIRTUAL_PORT: 443
+      LETSENCRYPT_HOST: sprinterweb.anikamagroup.com, www.sprinterweb.anikamagroup.com
+      LETSENCRYPT_EMAIL: cvasquez@anikamagroup.com
+    depends_on:
+      - database
+    volumes:
+      - "/var/www/sprinterweb:/var/www/sprinterweb"
+    volumes_from:
+      - "nginx-proxy"
+
+  init_laravel:
+    image: christiandavbid/laravel:latest
+    container_name: init_laravel
+    environment:
       VIRTUAL_HOST: test.anikamagroup.com, www.test.anikamagroup.com
       VIRTUAL_PROTO: https
       VIRTUAL_PORT: 443
@@ -13,7 +29,7 @@ services:
     depends_on:
       - database
     volumes:
-      - "/var/www/sprinterweb:/var/www/app"
+      - "/var/www/laravel-app:/var/www/app"
     volumes_from:
       - "nginx-proxy"
 
@@ -25,7 +41,7 @@ services:
         - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: weiweiwei
-      MYSQL_DATABASE: database
+      MYSQL_DATABASE: panel_sprinter
       MYSQL_USER: devops
       MYSQL_PASSWORD: sasasa
     volumes:
